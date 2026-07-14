@@ -121,36 +121,62 @@ export default function HomeLanding({ onExploreMaterials }: HomeLandingProps) {
           </div>
 
           {/* Right Columns: Feature Grid */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <div className="space-y-3 p-6 bg-slate-950/40 border border-slate-800/80 rounded-none">
-              <Cpu className="text-amber-500" size={24} />
-              <h3 className="text-sm font-bold tracking-wider text-white uppercase font-sans">
-                Smart Sourcing
-              </h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Browse verified manufacturer listings with fully integrated real-time dynamic clicks tracking. Monitor direct lead interactions instantly.
-              </p>
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            {/* Card 1 */}
+            <div className="space-y-4 p-7 bg-slate-950/40 border border-slate-900 hover:border-amber-500/20 hover:-translate-y-1 transition-all duration-300 rounded-3xl shadow-xl flex flex-col justify-between group">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/10">
+                    <Cpu size={18} />
+                  </div>
+                  <span className="font-condensed font-bold text-xl text-slate-800 select-none group-hover:text-amber-500/20 transition-colors duration-300">01</span>
+                </div>
+                <h3 className="text-xs font-bold tracking-wider text-white uppercase font-sans">
+                  Smart Sourcing
+                </h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Browse verified manufacturer listings with fully integrated real-time dynamic clicks tracking. Monitor direct lead interactions instantly.
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-3 p-6 bg-slate-950/40 border border-slate-800/80 rounded-none">
-              <ShieldCheck className="text-amber-500" size={24} />
-              <h3 className="text-sm font-bold tracking-wider text-white uppercase font-sans">
-                Verified Settle Path
-              </h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Choose between Path A for instant RTGS wire clearing or leverage Path B for sandbox-backed interest-bearing credit facilities up to ₹50,00,000 INR.
-              </p>
+            {/* Card 2 */}
+            <div className="space-y-4 p-7 bg-slate-950/40 border border-slate-900 hover:border-amber-500/20 hover:-translate-y-1 transition-all duration-300 rounded-3xl shadow-xl flex flex-col justify-between group">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/10">
+                    <ShieldCheck size={18} />
+                  </div>
+                  <span className="font-condensed font-bold text-xl text-slate-800 select-none group-hover:text-amber-500/20 transition-colors duration-300">02</span>
+                </div>
+                <h3 className="text-xs font-bold tracking-wider text-white uppercase font-sans">
+                  Verified Settle Path
+                </h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Choose between Path A for instant RTGS wire clearing or leverage Path B for sandbox-backed interest-bearing credit facilities up to ₹50,00,000 INR.
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-3 p-6 bg-slate-950/40 border border-slate-800/80 rounded-none sm:col-span-2">
-              <Truck className="text-amber-500" size={24} />
-              <h3 className="text-sm font-bold tracking-wider text-white uppercase font-sans">
-                SMTP-Aligned Logistics Confirmation
-              </h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Gain continuous automated updates. All buyer orders and compliance modifications trigger immediate dispatch confirmations directly to corporate mail servers.
-              </p>
+            {/* Card 3 */}
+            <div className="space-y-4 p-7 bg-slate-950/40 border border-slate-900 hover:border-amber-500/20 hover:-translate-y-1 transition-all duration-300 rounded-3xl shadow-xl flex flex-col justify-between group sm:col-span-2">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/10">
+                    <Truck size={18} />
+                  </div>
+                  <span className="font-condensed font-bold text-xl text-slate-800 select-none group-hover:text-amber-500/20 transition-colors duration-300">03</span>
+                </div>
+                <h3 className="text-xs font-bold tracking-wider text-white uppercase font-sans">
+                  SMTP-Aligned Logistics Confirmation
+                </h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Gain continuous automated updates. All buyer orders and compliance modifications trigger immediate dispatch confirmations directly to corporate mail servers.
+                </p>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
