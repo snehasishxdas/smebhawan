@@ -25,9 +25,9 @@ export default function Header({
 }: HeaderProps) {
   const unreadCount = notifications.filter(n => !n.isRead).length;
   return (
-    <header className="w-full flex flex-col z-40 bg-brand-blue text-white shadow-xl">
+    <header className="w-full flex flex-col z-40 bg-[#0b0f19] text-white border-b border-slate-900 shadow-2xl">
       {/* Top B2B Announcement Strip */}
-      <div className="bg-blue-950 px-4 py-2 text-xs flex flex-wrap justify-between items-center border-b border-blue-900 font-mono">
+      <div className="bg-[#060910] px-4 py-2 text-xs flex flex-wrap justify-between items-center border-b border-slate-900 font-mono">
         <div className="flex items-center space-x-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>INDIA'S FIRST EXCLUSIVE B2B RAW MATERIALS PLATFORM</span>
@@ -61,14 +61,27 @@ export default function Header({
         </button>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex space-x-1 text-sm">
+        <nav className="hidden md:flex space-x-2 text-sm">
           <button
             onClick={() => setActiveView("home")}
-            className={`px-4 py-2 rounded-md font-medium transition cursor-pointer ${
-              activeView === "home" ? "bg-white/10 text-white" : "text-gray-300 hover:text-white"
+            className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+              activeView === "home" 
+                ? "bg-slate-900 border-slate-800 text-amber-500 font-semibold shadow-glow-amber" 
+                : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
             }`}
           >
-            Product Directory
+            Home
+          </button>
+          
+          <button
+            onClick={() => setActiveView("materials")}
+            className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+              activeView === "materials" 
+                ? "bg-slate-900 border-slate-800 text-amber-500 font-semibold shadow-glow-amber" 
+                : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
+            }`}
+          >
+            All Materials
           </button>
           
           {user && (
@@ -76,8 +89,10 @@ export default function Header({
               {user.role === "buyer" && (
                 <button
                   onClick={() => setActiveView("buyer")}
-                  className={`px-4 py-2 rounded-md font-medium transition cursor-pointer ${
-                    activeView === "buyer" ? "bg-blue-600 text-white" : "text-gray-200 hover:bg-white/5"
+                  className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+                    activeView === "buyer" 
+                      ? "bg-blue-600 border-blue-500 text-white shadow-glow-blue" 
+                      : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
                   }`}
                 >
                   My Procurement Console
@@ -86,8 +101,10 @@ export default function Header({
               {user.role === "supplier" && (
                 <button
                   onClick={() => setActiveView("supplier")}
-                  className={`px-4 py-2 rounded-md font-medium transition cursor-pointer ${
-                    activeView === "supplier" ? "bg-blue-600 text-white" : "text-gray-200 hover:bg-white/5"
+                  className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+                    activeView === "supplier" 
+                      ? "bg-blue-600 border-blue-500 text-white shadow-glow-blue" 
+                      : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
                   }`}
                 >
                   Supplier Analytics & Link Hub
@@ -96,8 +113,10 @@ export default function Header({
               {user.role === "admin" && (
                 <button
                   onClick={() => setActiveView("admin")}
-                  className={`px-4 py-2 rounded-md font-medium transition cursor-pointer ${
-                    activeView === "admin" ? "bg-red-600/90 text-white" : "text-gray-200 hover:bg-white/5"
+                  className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+                    activeView === "admin" 
+                      ? "bg-rose-950 border-rose-800 text-rose-300 shadow-glow-blue" 
+                      : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
                   }`}
                 >
                   Internal Admin control Panel

@@ -1,13 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { RawMaterial, User } from "../types";
 import { 
-  Search, MapPin, Tag, ShoppingBag, Plus, Star, StarHalf, FileSpreadsheet, 
-  ChevronRight, ArrowRight, ClipboardCheck, Sparkles, AlertCircle, HelpCircle, Activity,
-  X, CheckCircle
+  Search, MapPin, Tag, ShoppingBag, Plus, Star, ChevronRight, ArrowRight, 
+  ClipboardCheck, Sparkles, Activity, X, CheckCircle
 } from "lucide-react";
-import SmebhawanLogo from "./SmebhawanLogo";
 
-interface HomeViewProps {
+interface MaterialsViewProps {
   user: User | null;
   materials: RawMaterial[];
   onSubmitRequest: (reqData: any) => Promise<boolean>;
@@ -38,13 +36,13 @@ const SIDEBAR_CATEGORIES = [
   "Cosmetics & Perfume",
 ];
 
-export default function HomeView({
+export default function MaterialsView({
   user,
   materials,
   onSubmitRequest,
   onRegisterClick,
   onOpenAuth,
-}: HomeViewProps) {
+}: MaterialsViewProps) {
   // Search parameters
   const [searchCategory, setSearchCategory] = useState("");
   const [searchMaterial, setSearchMaterial] = useState("");
@@ -151,68 +149,67 @@ export default function HomeView({
   };
 
   return (
-    <div className="flex flex-col space-y-12 pb-16">
+    <div className="flex flex-col space-y-8 pb-16 bg-transparent text-slate-100 min-h-screen">
       
-      {/* 1. B2B Search Hero - Polished with smebhawan branding */}
-      <section 
-        className="relative bg-brand-blue/80 bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1600&q=50')] bg-cover bg-center bg-blend-darken text-white py-14 px-4 md:py-20"
-        style={{ backgroundBlendMode: "overlay" }}
-        id="b2b_search_hero"
-      >
-        <div className="max-w-6xl mx-auto text-center space-y-8 relative">
-          <div className="flex flex-col items-center space-y-4">
-            <SmebhawanLogo variant="full" size="xl" lightText={true} className="mb-2" />
-            <p className="text-gray-200 text-sm md:text-base max-w-2xl mx-auto font-sans">
-              Seamlessly Connecting India's MSME Procurement Pipelines — Build, Track, and Settle Together.
+      {/* 1. Header Toolbar / Top Section - Dedicated Search Panel */}
+      <section className="bg-slate-950/80 backdrop-blur-md border-b border-slate-900 text-white py-12 px-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <div className="text-center md:text-left space-y-2">
+            <h2 className="text-2xl font-bold font-display tracking-tight text-white flex items-center justify-center md:justify-start gap-2 text-glow-blue">
+              <Sparkles size={20} className="text-amber-500" />
+              <span>National Materials Sourcing Directory</span>
+            </h2>
+            <p className="text-xs text-slate-400 font-sans max-w-xl">
+              Search through thousands of live verified industrial manufacturer listing endpoints across India.
             </p>
           </div>
 
           {/* Search Card Container with multiple dropdowns */}
-          <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl max-w-5xl mx-auto shadow-2xl border border-white/10 text-slate-900 grid grid-cols-1 md:grid-cols-4 gap-2.5">
+          <div className="bg-slate-900/60 backdrop-blur-md p-3.5 rounded-2xl max-w-6xl mx-auto shadow-2xl border border-slate-800 grid grid-cols-1 md:grid-cols-4 gap-2.5">
             {/* Category selection */}
-            <div className="bg-white rounded-xl px-3 py-2 flex items-center space-x-2 text-left shadow-xs">
-              <Tag size={18} className="text-blue-600 shrink-0" />
+            <div className="bg-slate-950 rounded-xl px-3 py-2 flex items-center space-x-2 text-left border border-slate-800 shadow-inner">
+              <Tag size={16} className="text-blue-500 shrink-0" />
               <div className="flex-1 min-w-0">
-                <span className="text-[10px] font-semibold text-gray-400 block uppercase tracking-wider">Category</span>
+                <span className="text-[9px] font-bold text-slate-500 block uppercase tracking-wider font-mono">Category</span>
                 <select 
                   value={searchCategory}
                   onChange={(e) => setSearchCategory(e.target.value)}
-                  className="w-full text-xs font-semibold focus:outline-none bg-transparent text-slate-800"
+                  className="w-full text-xs font-semibold focus:outline-none bg-transparent text-slate-200 border-none cursor-pointer"
                 >
-                  <option value="">All Categories</option>
+                  <option value="" className="bg-slate-950 text-slate-200">All Categories</option>
                   {CATEGORIES.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
+                    <option key={cat} value={cat} className="bg-slate-950 text-slate-200">{cat}</option>
                   ))}
                 </select>
               </div>
             </div>
 
             {/* Material Name input */}
-            <div className="bg-white rounded-xl px-3 py-2 flex items-center space-x-2 text-left shadow-xs">
-              <Search size={18} className="text-blue-600 shrink-0" />
+            <div className="bg-slate-950 rounded-xl px-3 py-2 flex items-center space-x-2 text-left border border-slate-800 shadow-inner">
+              <Search size={16} className="text-blue-500 shrink-0" />
               <div className="flex-1 min-w-0">
-                <span className="text-[10px] font-semibold text-gray-400 block uppercase tracking-wider">Raw Material</span>
+                <span className="text-[9px] font-bold text-slate-500 block uppercase tracking-wider font-mono">Raw Material</span>
                 <input 
                   type="text"
                   placeholder="Steel, plastics, etc."
                   value={searchMaterial}
                   onChange={(e) => setSearchMaterial(e.target.value)}
-                  className="w-full text-xs font-medium focus:outline-none bg-transparent text-slate-800 placeholder-gray-400"
+                  className="w-full text-xs font-medium focus:outline-none bg-transparent text-slate-200 placeholder-slate-600 border-none"
                 />
               </div>
             </div>
 
             {/* Location selector */}
-            <div className="bg-white rounded-xl px-3 py-2 flex items-center space-x-2 text-left shadow-xs">
-              <MapPin size={18} className="text-blue-600 shrink-0" />
+            <div className="bg-slate-950 rounded-xl px-3 py-2 flex items-center space-x-2 text-left border border-slate-800 shadow-inner">
+              <MapPin size={16} className="text-blue-500 shrink-0" />
               <div className="flex-1 min-w-0">
-                <span className="text-[10px] font-semibold text-gray-400 block uppercase tracking-wider">Location</span>
+                <span className="text-[9px] font-bold text-slate-500 block uppercase tracking-wider font-mono">Location</span>
                 <input 
                   type="text"
                   placeholder="Mumbai, Gujarat..."
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full text-xs font-medium focus:outline-none bg-transparent text-slate-800 placeholder-gray-400"
+                  className="w-full text-xs font-medium focus:outline-none bg-transparent text-slate-200 placeholder-slate-600 border-none"
                 />
               </div>
             </div>
@@ -225,7 +222,7 @@ export default function HomeView({
                   setSearchMaterial("");
                   setSearchLocation("");
                 }}
-                className="flex-1 bg-slate-800/85 hover:bg-slate-900 text-white rounded-xl py-3 text-xs font-bold transition flex items-center justify-center space-x-1 cursor-pointer"
+                className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl py-3.5 text-xs font-bold transition flex items-center justify-center space-x-1 cursor-pointer border border-slate-700"
               >
                 Clear
               </button>
@@ -233,7 +230,7 @@ export default function HomeView({
                 onClick={() => {
                   setActiveSidebarCat("");
                 }}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-xs font-bold tracking-wide shadow-lg transition flex items-center justify-center space-x-1 cursor-pointer"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3.5 text-xs font-bold tracking-wide shadow-lg hover:shadow-glow-blue transition flex items-center justify-center space-x-1 cursor-pointer border border-blue-500/50"
               >
                 <span>Search</span>
                 <ArrowRight size={14} />
@@ -243,8 +240,8 @@ export default function HomeView({
         </div>
       </section>
 
-      {/* 2. Top Banner Row: Blue and white categorization grid matching design screenshot */}
-      <section className="bg-blue-900 text-white py-1.5 px-4 scroll-smooth">
+      {/* 2. Top Banner Row: Categories Navigation */}
+      <section className="bg-slate-950/40 border-y border-slate-900 text-white py-2 px-4 scroll-smooth">
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs font-semibold gap-y-2">
           {CATEGORIES.map(cat => (
             <button
@@ -253,7 +250,11 @@ export default function HomeView({
                 setSearchCategory("");
                 setActiveSidebarCat(cat);
               }}
-              className="hover:text-blue-300 transition px-2 py-1.5 rounded cursor-pointer whitespace-nowrap"
+              className={`hover:text-amber-500 transition px-2.5 py-1.5 rounded-lg cursor-pointer whitespace-nowrap text-[11px] ${
+                activeSidebarCat.toLowerCase() === cat.toLowerCase()
+                  ? "bg-slate-900 border border-slate-800 text-amber-500 font-bold"
+                  : "text-slate-400"
+              }`}
             >
               {cat}
             </button>
@@ -263,7 +264,7 @@ export default function HomeView({
               setActiveSidebarCat("");
               setSearchCategory("");
             }}
-            className="text-amber-400 hover:text-amber-300 transition"
+            className="text-amber-500 hover:text-amber-400 transition cursor-pointer text-[11px] pl-2 font-bold"
           >
             View All Categories &gt;
           </button>
@@ -271,15 +272,15 @@ export default function HomeView({
       </section>
 
       {/* 3. Main Split Category-Browser Grid */}
-      <section className="max-w-7xl w-full mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <section className="max-w-7xl w-full mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
         
         {/* Left Side: "Browse By Categories" Sidebar */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-xs overflow-hidden">
-            <div className="bg-blue-950 text-white p-4">
-              <h3 className="font-display font-semibold text-sm uppercase tracking-wider">Browse By Categories</h3>
+          <div className="bg-slate-950/80 rounded-3xl border border-slate-900 shadow-2xl overflow-hidden">
+            <div className="bg-slate-900 border-b border-slate-950 p-4">
+              <h3 className="font-display font-semibold text-xs uppercase tracking-wider text-slate-300">Browse By Categories</h3>
             </div>
-            <nav className="flex flex-col divide-y divide-gray-100 font-sans">
+            <nav className="flex flex-col divide-y divide-slate-900/60 font-sans">
               {SIDEBAR_CATEGORIES.map(cat => {
                 const isActive = activeSidebarCat.toLowerCase() === cat.toLowerCase();
                 return (
@@ -291,12 +292,12 @@ export default function HomeView({
                     }}
                     className={`p-3.5 text-left text-xs font-medium transition flex justify-between items-center cursor-pointer ${
                       isActive 
-                        ? "bg-blue-950 text-white font-semibold pl-4.5" 
-                        : "text-slate-700 hover:bg-slate-50 hover:text-blue-950"
+                        ? "bg-slate-900/80 text-amber-500 font-bold border-l-4 border-l-amber-500 pl-4.5" 
+                        : "text-slate-400 hover:bg-slate-900/40 hover:text-slate-200"
                     }`}
                   >
                     <span>{cat}</span>
-                    <ChevronRight size={14} className={isActive ? "text-amber-400" : "text-gray-400"} />
+                    <ChevronRight size={14} className={isActive ? "text-amber-500" : "text-slate-600"} />
                   </button>
                 );
               })}
@@ -304,13 +305,13 @@ export default function HomeView({
           </div>
 
           {/* Quick Quote Widget */}
-          <div className="bg-slate-900 text-white rounded-xl p-5 shadow-lg space-y-4">
-            <div className="flex items-center space-x-2 text-indigo-400">
+          <div className="bg-slate-950/80 border border-slate-900 rounded-3xl p-5 shadow-2xl space-y-4">
+            <div className="flex items-center space-x-2 text-blue-400">
               <ClipboardCheck size={18} />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">Demand Registry</span>
             </div>
-            <h4 className="font-display font-semibold text-base">Sourcing Custom Materials?</h4>
-            <p className="text-xs text-gray-300 leading-relaxed">
+            <h4 className="font-display font-semibold text-sm text-white">Sourcing Custom Materials?</h4>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
               If an item is not found in our live active supplier directory, submit a general procurement challenge to trigger automatic broker matching processes.
             </p>
             <button
@@ -321,7 +322,7 @@ export default function HomeView({
                   setShowCustomForm(true);
                 }
               }}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 text-xs font-bold transition flex items-center justify-center space-x-1 cursor-pointer"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-2.5 text-xs font-bold transition flex items-center justify-center space-x-1 cursor-pointer border border-blue-500/30 shadow-md"
             >
               <Plus size={14} />
               <span>Submit Custom Request</span>
@@ -331,15 +332,15 @@ export default function HomeView({
 
         {/* Right Side: Active Catalog & Product Listings */}
         <div className="lg:col-span-9 space-y-6">
-          <div className="flex flex-wrap justify-between items-center border-b border-gray-200 pb-4 gap-y-2">
+          <div className="flex flex-wrap justify-between items-center border-b border-slate-900 pb-4 gap-y-2">
             <div>
-              <h2 className="text-xl font-display font-bold text-slate-900 flex items-center space-x-2">
+              <h2 className="text-xl font-display font-bold text-white flex items-center space-x-2">
                 <span>Active Sourcing Directory</span>
-                <span className="text-xs bg-slate-100 text-slate-600 font-mono font-normal px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 font-mono font-normal px-2 py-0.5 rounded-full">
                   {filteredMaterials.length} Active Items
                 </span>
               </h2>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-[11px] text-slate-500 mt-1">
                 {activeSidebarCat ? `Filtering listings classified under ${activeSidebarCat}` : "Showing all verified manufacturer materials"}
               </p>
             </div>
@@ -347,7 +348,7 @@ export default function HomeView({
             {activeSidebarCat && (
               <button
                 onClick={() => setActiveSidebarCat("")}
-                className="text-xs text-blue-600 hover:underline font-semibold bg-blue-50 px-2.5 py-1.5 rounded-lg border border-blue-200"
+                className="text-xs text-blue-400 hover:underline font-semibold bg-slate-950 border border-slate-900 px-3 py-1.5 rounded-xl cursor-pointer"
               >
                 Clear category filter
               </button>
@@ -356,13 +357,13 @@ export default function HomeView({
 
           {/* Fallback Empty */}
           {filteredMaterials.length === 0 ? (
-            <div className="p-12 text-center bg-white border border-gray-100 rounded-2xl flex flex-col items-center space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+            <div className="p-12 text-center bg-slate-950 border border-slate-900 rounded-3xl flex flex-col items-center space-y-4 shadow-xl">
+              <div className="w-12 h-12 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">
                 <Search size={22} />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800">No raw material listings matched</h3>
-                <p className="text-xs text-gray-500 mt-1">
+                <h3 className="font-semibold text-slate-200">No raw material listings matched</h3>
+                <p className="text-xs text-slate-500 mt-1">
                   Try clearing your search query or choosing another category in the sidebar directory.
                 </p>
               </div>
@@ -372,19 +373,19 @@ export default function HomeView({
               {filteredMaterials.map(m => (
                 <div 
                   key={m._id}
-                  className="bg-white rounded-xl border border-gray-100 shadow-xs hover:shadow-md hover:border-gray-200 transition-all overflow-hidden flex flex-col group justify-between"
+                  className="bg-slate-950 rounded-3xl border border-slate-900 shadow-xl hover:shadow-glow-blue hover:border-blue-500/20 transition-all duration-300 overflow-hidden flex flex-col group justify-between"
                 >
                   {/* Product Header Thumbnail */}
-                  <div className="relative h-44 w-full bg-slate-50 overflow-hidden">
+                  <div className="relative h-44 w-full bg-slate-900 overflow-hidden">
                     <img 
                       src={m.image || "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"}
                       alt={m.title}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-80"
                     />
                     
                     {/* India Origin Tag */}
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] font-semibold text-slate-900 border border-gray-200 flex items-center space-x-1 shadow-sm">
+                    <div className="absolute top-3 right-3 bg-slate-950/90 backdrop-blur-xs px-2 py-0.5 rounded text-[9px] font-semibold text-slate-200 border border-slate-800 flex items-center space-x-1 shadow-sm">
                       <span className="w-2.5 h-1.5 bg-orange-500 inline-block"></span>
                       <span className="w-2.5 h-1.5 bg-white border-y border-gray-300 inline-block"></span>
                       <span className="w-2.5 h-1.5 bg-emerald-600 inline-block"></span>
@@ -393,65 +394,65 @@ export default function HomeView({
 
                     {/* Premium Sold Lock Overlay */}
                     {m.isSold && (
-                      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs flex flex-col justify-center items-center text-center p-3 text-white">
-                        <ShoppingBag className="text-amber-400 mb-1" size={24} />
+                      <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xs flex flex-col justify-center items-center text-center p-3 text-white">
+                        <ShoppingBag className="text-amber-500 mb-1" size={24} />
                         <span className="text-xs font-bold uppercase tracking-wider">Premium Sold Item</span>
-                        <span className="text-[10px] text-gray-300 px-2 mt-0.5">Contact supplier via dynamic analytics link to request fresh capacity</span>
+                        <span className="text-[9px] text-slate-400 px-2 mt-0.5">Contact supplier via dynamic analytics link to request fresh capacity</span>
                       </div>
                     )}
                   </div>
 
                   {/* Body Info */}
-                  <div className="p-4 flex-1 flex flex-col justify-between space-y-4">
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-1.5">
-                      <div className="flex justify-between items-center text-[10px] font-mono tracking-wider font-semibold text-gray-400 uppercase">
+                      <div className="flex justify-between items-center text-[9px] font-mono tracking-wider font-semibold text-slate-500 uppercase">
                         <span>{m.category}</span>
                         <div className="flex items-center space-x-0.5 text-amber-500">
                           <Star size={10} fill="currentColor" />
-                          <span className="font-sans font-bold text-slate-700">{m.rating}</span>
+                          <span className="font-sans font-bold text-slate-300">{m.rating}</span>
                         </div>
                       </div>
                       
-                      <h3 className="font-display font-semibold text-sm text-slate-800 line-clamp-2 min-h-[40px] group-hover:text-blue-600 transition">
+                      <h3 className="font-display font-semibold text-sm text-slate-100 line-clamp-2 min-h-[40px] group-hover:text-blue-400 transition">
                         {m.title}
                       </h3>
                       
-                      <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                      <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
                         {m.description}
                       </p>
                     </div>
 
                     <div className="space-y-2">
                       {/* Price Tag */}
-                      <div className="flex justify-between items-end border-t border-gray-100 pt-3">
+                      <div className="flex justify-between items-end border-t border-slate-900 pt-3">
                         <div>
-                          <span className="text-[10px] text-gray-400 block font-medium uppercase">Indicative Rate B2B</span>
-                          <span className="text-sm font-semibold text-slate-800">₹{m.priceQuote.toLocaleString("en-IN")}</span>
-                          <span className="text-xs text-gray-500 font-mono font-medium"> / {m.unit}</span>
+                          <span className="text-[9px] text-slate-500 block font-medium uppercase font-mono">Indicative Rate B2B</span>
+                          <span className="text-sm font-semibold text-white">₹{m.priceQuote.toLocaleString("en-IN")}</span>
+                          <span className="text-[11px] text-slate-500 font-mono font-medium"> / {m.unit}</span>
                         </div>
                         <div className="text-right">
-                          <span className="text-[10px] text-gray-400 block font-medium uppercase">Supplier</span>
-                          <span className="text-xs font-semibold text-slate-600 truncate max-w-[130px] inline-block">{m.supplier}</span>
+                          <span className="text-[9px] text-slate-500 block font-medium uppercase font-mono">Supplier</span>
+                          <span className="text-xs font-semibold text-slate-300 truncate max-w-[130px] inline-block">{m.supplier}</span>
                         </div>
                       </div>
 
                       {/* Location Badge */}
-                      <div className="flex items-center space-x-1 text-gray-500 text-[11px]">
-                        <MapPin size={12} className="text-gray-400 shrink-0" />
+                      <div className="flex items-center space-x-1 text-slate-400 text-[11px]">
+                        <MapPin size={12} className="text-slate-500 shrink-0" />
                         <span className="truncate">{m.location}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Dynamic Interactive Link Footer */}
-                  <div className="p-4 bg-slate-50 border-t border-gray-100 flex gap-2">
+                  <div className="p-4 bg-slate-900/30 border-t border-slate-900 flex gap-2">
                     {/* "Sourcing Dynamic link" - REGISTER metric on click! */}
                     <a
                       href={`#lead_details_${m._id}`}
                       onClick={() => {
                         onRegisterClick(m.rawLink, m._id);
                       }}
-                      className="flex-1 bg-white hover:bg-slate-10 relative border border-gray-200 hover:border-gray-300 text-slate-700 rounded-lg py-2 text-xs font-semibold transition text-center flex items-center justify-center space-x-1 focus:ring cursor-pointer"
+                      className="flex-1 bg-slate-900 hover:bg-slate-800/85 relative border border-slate-800 hover:border-slate-700 text-slate-200 rounded-xl py-2 text-xs font-semibold transition text-center flex items-center justify-center space-x-1 focus:ring cursor-pointer"
                       title="Follow supplier external product website"
                     >
                       <Activity size={12} className="text-emerald-500 animate-pulse" />
@@ -468,7 +469,7 @@ export default function HomeView({
                           setInquiryMaterial(m);
                         }
                       }}
-                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-3 py-2 text-xs font-bold shadow-xs transition cursor-pointer"
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-3 py-2 text-xs font-bold shadow-xs hover:shadow-glow-blue border border-blue-500/20 transition cursor-pointer"
                     >
                       Order
                     </button>
@@ -482,102 +483,102 @@ export default function HomeView({
 
       {/* 4. Active Sourcing Inquiry Modal */}
       {inquiryMaterial && (
-        <div className="fixed inset-0 bg-brand-blue/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-100">
-            <div className="bg-slate-900 text-white p-5 flex justify-between items-center">
+        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="bg-slate-950 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-900">
+            <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-950">
               <div>
-                <h4 className="font-display font-semibold text-base">MSME Sourcing Commitment</h4>
-                <p className="text-[11px] text-gray-400 mt-1">Order verification & pre-approved credit setup</p>
+                <h4 className="font-display font-semibold text-sm">MSME Sourcing Commitment</h4>
+                <p className="text-[10px] text-slate-400 mt-1">Order verification & pre-approved credit setup</p>
               </div>
               <button 
                 onClick={() => setInquiryMaterial(null)}
-                className="text-gray-400 hover:text-white"
+                className="text-slate-400 hover:text-white cursor-pointer"
               >
-                <ChevronRight size={20} className="rotate-95" />
+                <X size={20} />
               </button>
             </div>
 
             <form onSubmit={handleInquirySubmit} className="p-5 space-y-4">
               
               {submitSuccess ? (
-                <div className="p-4 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-center space-y-2">
-                  <CheckCircle size={28} className="mx-auto text-emerald-600" />
-                  <h5 className="font-semibold text-sm">Dispatched Sourcing Order Logging!</h5>
-                  <p className="text-[11px]">Emails sent to custom domains via verified SMTP channels.</p>
+                <div className="p-4 bg-emerald-500/10 text-emerald-400 border border-emerald-500/10 rounded-xl text-center space-y-2">
+                  <CheckCircle size={28} className="mx-auto text-emerald-500" />
+                  <h5 className="font-semibold text-xs">Dispatched Sourcing Order Logging!</h5>
+                  <p className="text-[10px]">Emails sent to custom domains via verified SMTP channels.</p>
                 </div>
               ) : (
                 <>
-                  <div className="p-3 bg-slate-50 rounded-lg space-y-1">
-                    <span className="text-[9px] font-bold text-gray-400 block uppercase">Product Spec</span>
-                    <strong className="text-xs text-slate-800 block line-clamp-1">{inquiryMaterial.title}</strong>
-                    <p className="text-[11px] text-slate-500">Unit base price: ₹{inquiryMaterial.priceQuote.toLocaleString()}/{inquiryMaterial.unit}</p>
+                  <div className="p-3.5 bg-slate-900 rounded-xl space-y-1 border border-slate-800">
+                    <span className="text-[8px] font-bold text-slate-500 block uppercase font-mono">Product Spec</span>
+                    <strong className="text-xs text-white block line-clamp-1">{inquiryMaterial.title}</strong>
+                    <p className="text-[11px] text-slate-400">Unit base price: ₹{inquiryMaterial.priceQuote.toLocaleString()}/{inquiryMaterial.unit}</p>
                   </div>
 
                   {/* Quantity */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-700 block">Required B2B Volume ({inquiryMaterial.unit})</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Required B2B Volume ({inquiryMaterial.unit})</label>
                     <input 
                       type="number"
                       value={inquiryQty}
                       onChange={(e) => setInquiryQty(Math.max(1, Number(e.target.value)))}
-                      className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                       required
                     />
                   </div>
 
                   {/* Shipping address */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-700 block">Delivery Sourcing Destination</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Delivery Sourcing Destination</label>
                     <input 
                       type="text"
                       placeholder="E.g. JNP Navy Port, Maharashtra"
                       value={inquiryLocation}
                       onChange={(e) => setInquiryLocation(e.target.value)}
-                      className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                       required
                     />
                   </div>
 
                   {/* Path Selection: Direct (A) vs Credit (B) */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-gray-700 block">Sourcing Settle Path</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Sourcing Settle Path</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setPaymentPath("PathA_Direct")}
-                        className={`p-2.5 rounded-lg border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
+                        className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathA_Direct"
-                            ? "border-blue-600 bg-blue-50 text-blue-900 font-semibold"
-                            : "border-gray-200 text-gray-600 hover:border-gray-300"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
+                            : "border-slate-850 text-slate-400 hover:border-slate-700"
                         }`}
                       >
                         <span>Path A: Direct</span>
-                        <span className="text-[9px] text-gray-500 font-normal">RTGS upfront (2% Com)</span>
+                        <span className="text-[9px] text-slate-500 font-normal">RTGS upfront (2% Com)</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setPaymentPath("PathB_Credit")}
-                        className={`p-2.5 rounded-lg border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
+                        className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathB_Credit"
-                            ? "border-blue-600 bg-blue-50 text-blue-900 font-semibold"
-                            : "border-gray-200 text-gray-600 hover:border-gray-300"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
+                            : "border-slate-850 text-slate-400 hover:border-slate-700"
                         }`}
                       >
                         <span>Path B: Credit</span>
-                        <span className="text-[9px] text-gray-500 font-normal">30-day (16% p.a. interest)</span>
+                        <span className="text-[9px] text-slate-500 font-normal">30-day (16% p.a. interest)</span>
                       </button>
                     </div>
                   </div>
 
                   {/* Calculations summary */}
-                  <div className="p-3 bg-blue-50/50 rounded-lg text-xs space-y-1.5 ring-1 ring-blue-100">
+                  <div className="p-3.5 bg-slate-900/60 rounded-xl text-xs space-y-1.5 border border-slate-850">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Estimated Invoice:</span>
-                      <strong className="text-slate-800">₹{(inquiryQty * inquiryMaterial.priceQuote).toLocaleString('en-IN')} INR</strong>
+                      <span className="text-slate-400">Estimated Invoice:</span>
+                      <strong className="text-white">₹{(inquiryQty * inquiryMaterial.priceQuote).toLocaleString('en-IN')} INR</strong>
                     </div>
                     {paymentPath === "PathB_Credit" && (
-                      <div className="flex justify-between text-indigo-700">
+                      <div className="flex justify-between text-blue-400">
                         <span>Path B Interest Cap (30 days):</span>
                         <strong>₹{Math.round((inquiryQty * inquiryMaterial.priceQuote) * 0.16 * 30 / 365).toLocaleString('en-IN')} INR</strong>
                       </div>
@@ -588,7 +589,7 @@ export default function HomeView({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-xs font-semibold tracking-wide shadow transition cursor-pointer disabled:opacity-50"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-xs font-semibold tracking-wide shadow-lg border border-blue-500/30 transition cursor-pointer disabled:opacity-50"
                   >
                     {submitting ? "Processing Order Flow..." : "Confirm & Send Purchase Order (PO)"}
                   </button>
@@ -601,19 +602,19 @@ export default function HomeView({
 
       {/* 5. Custom Raw Material Sourcing Modal Form */}
       {showCustomForm && (
-        <div className="fixed inset-0 bg-brand-blue/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-100">
-            <div className="bg-indigo-950 text-white p-5 flex justify-between items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900 to-slate-950">
+        <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="bg-slate-950 border border-slate-900 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden">
+            <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-950">
               <div>
-                <h4 className="font-display font-semibold text-base flex items-center space-x-2">
-                  <Sparkles size={16} className="text-amber-400" />
+                <h4 className="font-display font-semibold text-sm flex items-center space-x-2">
+                  <Sparkles size={16} className="text-amber-500" />
                   <span>Submit Sourcing Call</span>
                 </h4>
-                <p className="text-[11px] text-gray-400 mt-1">Multi-Supplier B2B Sourcing Demands</p>
+                <p className="text-[10px] text-slate-400 mt-1">Multi-Supplier B2B Sourcing Demands</p>
               </div>
               <button 
                 onClick={() => setShowCustomForm(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-slate-400 hover:text-white cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -621,101 +622,101 @@ export default function HomeView({
 
             <form onSubmit={handleCustomRequestSubmit} className="p-5 space-y-4">
               {submitSuccess ? (
-                <div className="p-4 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-center space-y-2">
-                  <CheckCircle size={28} className="mx-auto text-emerald-600" />
-                  <h5 className="font-semibold text-sm">Dispatched B2B Custom Inquiry!</h5>
-                  <p className="text-[11px]">Sellers are notified of incoming specifications securely.</p>
+                <div className="p-4 bg-emerald-500/10 text-emerald-400 border border-emerald-500/10 rounded-xl text-center space-y-2">
+                  <CheckCircle size={28} className="mx-auto text-emerald-500" />
+                  <h5 className="font-semibold text-xs">Dispatched B2B Custom Inquiry!</h5>
+                  <p className="text-[10px]">Sellers are notified of incoming specifications securely.</p>
                 </div>
               ) : (
                 <>
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-700 block">Required Product Specification / Name</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Required Product Specification / Name</label>
                     <input 
                       type="text"
                       placeholder="E.g. Cold Rolled Industrial Steel sheets (CRCA)"
                       value={customMaterial}
                       onChange={(e) => setCustomMaterial(e.target.value)}
-                      className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                       required
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-gray-700 block">Quantity Needed</label>
+                      <label className="text-xs font-semibold text-slate-300 block">Quantity Needed</label>
                       <input 
                         type="number"
                         value={customQty}
                         onChange={(e) => setCustomQty(Math.max(1, Number(e.target.value)))}
-                        className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800 focus:outline-none"
+                        className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                         required
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-gray-700 block">Unit</label>
+                      <label className="text-xs font-semibold text-slate-300 block">Unit</label>
                       <select 
                         value={customUnit}
                         onChange={(e) => setCustomUnit(e.target.value)}
-                        className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800"
+                        className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none"
                       >
-                        <option value="Tons">Tons</option>
-                        <option value="Kg">Kg</option>
-                        <option value="Cubic Metres">Cubic Metres</option>
-                        <option value="Litres">Litres</option>
+                        <option value="Tons" className="bg-slate-950">Tons</option>
+                        <option value="Kg" className="bg-slate-950">Kg</option>
+                        <option value="Cubic Metres" className="bg-slate-950">Cubic Metres</option>
+                        <option value="Litres" className="bg-slate-950">Litres</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-700 block">Target Settle Strategy</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Target Settle Strategy</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setPaymentPath("PathA_Direct")}
-                        className={`p-2.5 rounded-lg border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
+                        className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathA_Direct"
-                            ? "border-blue-600 bg-blue-50 text-blue-900 font-semibold"
-                            : "border-gray-200 text-gray-600 hover:border-gray-300"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
+                            : "border-slate-850 text-slate-400 hover:border-slate-700"
                         }`}
                       >
                         <span>Path A: Direct</span>
-                        <span className="text-[9px] text-gray-400 font-normal">RTGS upfront (2% Com)</span>
+                        <span className="text-[9px] text-slate-500 font-normal">RTGS upfront (2% Com)</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setPaymentPath("PathB_Credit")}
-                        className={`p-2.5 rounded-lg border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
+                        className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathB_Credit"
-                            ? "border-blue-600 bg-blue-50 text-blue-900 font-semibold"
-                            : "border-gray-200 text-gray-600 hover:border-gray-300"
+                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
+                            : "border-slate-850 text-slate-400 hover:border-slate-700"
                         }`}
                       >
                         <span>Path B: Credit</span>
-                        <span className="text-[9px] text-gray-400 font-normal">30-day (16% p.a. interest)</span>
+                        <span className="text-[9px] text-slate-500 font-normal">30-day (16% p.a. interest)</span>
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-700 block">Required Sourcing Budget Range</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Required Sourcing Budget Range</label>
                     <input 
                       type="text"
                       value={customBudget}
                       onChange={(e) => setCustomBudget(e.target.value)}
                       placeholder="E.g. ₹10,00,000 - ₹20,00,000"
-                      className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800"
+                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-700 block">Shipment Location Target</label>
+                    <label className="text-xs font-semibold text-slate-300 block">Shipment Location Target</label>
                     <input 
                       type="text"
                       value={customLocation}
                       onChange={(e) => setCustomLocation(e.target.value)}
                       placeholder="E.g. Jaipur Steel Yard, Rajasthan"
-                      className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-slate-800"
+                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
                       required
                     />
                   </div>
@@ -723,7 +724,7 @@ export default function HomeView({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-xs font-semibold tracking-wide shadow cursor-pointer disabled:opacity-50"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 text-xs font-semibold tracking-wide shadow-lg border border-blue-500/30 transition cursor-pointer disabled:opacity-50"
                   >
                     {submitting ? "Broadcasting SPEC requirements..." : "Broadcast Spec To Verified Suppliers"}
                   </button>

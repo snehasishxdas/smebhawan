@@ -24,9 +24,32 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #FAF8F5; /* Matches the clean logo cream/beige canvas perfectly */
-  color: #0f172a;
+  background-color: #0b0f19;
+  /* Global background image throughout full website with fixed scrolling */
+  background-image: linear-gradient(rgba(11, 15, 25, 0.70), rgba(11, 15, 25, 0.80)), url('/assets/hero_warehouse.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #f1f5f9;
   overflow-x: hidden;
+}
+
+/* Glow effects inspired by reference sites */
+.shadow-glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+}
+
+.shadow-glow-amber {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
 }
 
 .font-display {
@@ -35,4 +58,34 @@ body {
 
 .font-mono {
   font-family: var(--font-mono);
+}
+
+/* Custom glow borders */
+.border-glow-blue {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+}
+
+.border-glow-amber {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+}
+
+/* Scrollbar styling for modern dark interface */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
 }

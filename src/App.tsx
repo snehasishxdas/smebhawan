@@ -3,7 +3,8 @@ import { User, RawMaterial, LinkClick, ProcurementRequest, AppNotification, Audi
 import { motion, AnimatePresence } from "motion/react";
 import SmebhawanLogo from "./components/SmebhawanLogo";
 import Header from "./components/Header";
-import HomeView from "./components/HomeView";
+import HomeLanding from "./components/HomeLanding";
+import MaterialsView from "./components/MaterialsView";
 import BuyerDashboard from "./components/BuyerDashboard";
 import SupplierDashboard from "./components/SupplierDashboard";
 import AdminPanel from "./components/AdminPanel";
@@ -118,6 +119,7 @@ export default function App() {
     if (user) {
       const allowed = 
         (activeView === "home") ||
+        (activeView === "materials") ||
         (activeView === "buyer" && user.role === "buyer") ||
         (activeView === "supplier" && user.role === "supplier") ||
         (activeView === "admin" && user.role === "admin");
@@ -127,8 +129,8 @@ export default function App() {
         handleLogout();
       }
     } else {
-      // If no user is logged in, only "home" view is permitted
-      if (activeView !== "home") {
+      // If no user is logged in, only "home" and "materials" views are permitted
+      if (activeView !== "home" && activeView !== "materials") {
         console.warn("Security policy violation: Anonymous access to secured view. Redirecting to logout...");
         handleLogout();
       }
@@ -466,7 +468,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between" id="rawlink_application_container">
+    <div className="min-h-screen bg-transparent flex flex-col justify-between text-slate-100" id="rawlink_application_container">
       
       {/* Automatic Animated Intro Splash Hero Section */}
       <AnimatePresence>
@@ -474,17 +476,17 @@ export default function App() {
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -40, transition: { duration: 0.5, ease: "easeInOut" } }}
-            className="fixed inset-0 bg-[#FAF8F5] z-[9999] flex flex-col items-center justify-center p-6"
+            className="fixed inset-0 bg-[#0b0f19] z-[9999] flex flex-col items-center justify-center p-6"
             id="smebhawan_splash_screen"
           >
-            <div className="max-w-md w-full flex flex-col items-center space-y-8 text-center">
+            <div className="max-w-md w-full flex flex-col items-center space-y-8 text-center bg-slate-950/60 p-10 rounded-3xl border border-slate-900 shadow-2xl backdrop-blur-xl">
               {/* Logo Animated Reveal */}
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <SmebhawanLogo variant="full" size="xl" lightText={false} />
+                <SmebhawanLogo variant="full" size="xl" lightText={true} />
               </motion.div>
 
               {/* Tagline / Subtitle */}
@@ -494,10 +496,10 @@ export default function App() {
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="space-y-2"
               >
-                <p className="text-xs uppercase font-bold text-amber-700 tracking-widest">
+                <p className="text-xs uppercase font-bold text-amber-500 tracking-widest font-mono text-glow-amber">
                   National MSME Infrastructure Portal
                 </p>
-                <p className="text-[13px] text-slate-500 font-sans max-w-xs mx-auto leading-relaxed">
+                <p className="text-[13px] text-slate-400 font-sans max-w-xs mx-auto leading-relaxed">
                   Connecting small and medium enterprises directly to raw materials and suppliers.
                 </p>
               </motion.div>
@@ -509,13 +511,13 @@ export default function App() {
                 transition={{ delay: 0.3, duration: 0.4 }}
                 className="w-full space-y-3 pt-4 max-w-xs"
               >
-                <div className="w-full h-1 bg-slate-200 rounded-full overflow-hidden">
+                <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-slate-800 transition-all duration-100 ease-out rounded-full"
+                    className="h-full bg-blue-600 transition-all duration-100 ease-out rounded-full shadow-glow-blue"
                     style={{ width: `${splashProgress}%` }}
                   />
                 </div>
-                <div className="flex justify-between items-center text-[10px] font-mono text-slate-400">
+                <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
                   <span className="animate-pulse">BUILDING B2B PIPELINES...</span>
                   <span>{splashProgress}%</span>
                 </div>
@@ -541,7 +543,7 @@ export default function App() {
       />
 
       {/* 2. Main Body with dynamic active tabs */}
-      <main className="flex-1 w-full bg-slate-50 relative">
+      <main className="flex-1 w-full bg-transparent relative">
         {loading ? (
           <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-3 font-mono text-xs text-slate-500">
             <RefreshCw className="animate-spin text-blue-600" size={24} />
@@ -571,17 +573,21 @@ export default function App() {
             ) : (
               <>
                 {activeView === "home" && (
-              <HomeView 
-                user={user}
-                materials={materials}
-                onSubmitRequest={handleSourcingRequest}
-                onRegisterClick={handleRegisterClick}
-                onOpenAuth={(mode) => {
-                  setAuthMode(mode);
-                  setAuthOpen(true);
-                }}
-              />
-            )}
+                  <HomeLanding onExploreMaterials={() => setActiveView("materials")} />
+                )}
+
+                {activeView === "materials" && (
+                  <MaterialsView 
+                    user={user}
+                    materials={materials}
+                    onSubmitRequest={handleSourcingRequest}
+                    onRegisterClick={handleRegisterClick}
+                    onOpenAuth={(mode) => {
+                      setAuthMode(mode);
+                      setAuthOpen(true);
+                    }}
+                  />
+                )}
 
             {activeView === "buyer" && user?.role === "buyer" && (
               <BuyerDashboard 
