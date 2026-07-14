@@ -155,7 +155,7 @@ export default function MaterialsView({
       <section className="bg-slate-950/80 backdrop-blur-md border-b border-slate-900 text-white py-12 px-6">
         <div className="max-w-7xl mx-auto space-y-6">
           <div className="text-center md:text-left space-y-2">
-            <h2 className="text-2xl font-bold font-display tracking-tight text-white flex items-center justify-center md:justify-start gap-2 text-glow-blue">
+            <h2 className="text-3xl font-bold font-condensed tracking-wide text-white flex items-center justify-center md:justify-start gap-2">
               <Sparkles size={20} className="text-amber-500" />
               <span>National Materials Sourcing Directory</span>
             </h2>
@@ -278,7 +278,7 @@ export default function MaterialsView({
         <div className="lg:col-span-3 space-y-6">
           <div className="bg-slate-950/80 rounded-3xl border border-slate-900 shadow-2xl overflow-hidden">
             <div className="bg-slate-900 border-b border-slate-950 p-4">
-              <h3 className="font-display font-semibold text-xs uppercase tracking-wider text-slate-300">Browse By Categories</h3>
+              <h3 className="font-condensed font-bold text-sm tracking-wider text-slate-300">Browse By Categories</h3>
             </div>
             <nav className="flex flex-col divide-y divide-slate-900/60 font-sans">
               {SIDEBAR_CATEGORIES.map(cat => {
@@ -310,7 +310,7 @@ export default function MaterialsView({
               <ClipboardCheck size={18} />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">Demand Registry</span>
             </div>
-            <h4 className="font-display font-semibold text-sm text-white">Sourcing Custom Materials?</h4>
+            <h4 className="font-condensed font-bold text-base text-white tracking-wide">Sourcing Custom Materials?</h4>
             <p className="text-[11px] text-slate-400 leading-relaxed">
               If an item is not found in our live active supplier directory, submit a general procurement challenge to trigger automatic broker matching processes.
             </p>
@@ -334,7 +334,7 @@ export default function MaterialsView({
         <div className="lg:col-span-9 space-y-6">
           <div className="flex flex-wrap justify-between items-center border-b border-slate-900 pb-4 gap-y-2">
             <div>
-              <h2 className="text-xl font-display font-bold text-white flex items-center space-x-2">
+              <h2 className="text-2xl font-condensed font-bold text-white tracking-wide flex items-center space-x-2">
                 <span>Active Sourcing Directory</span>
                 <span className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 font-mono font-normal px-2 py-0.5 rounded-full">
                   {filteredMaterials.length} Active Items
@@ -413,7 +413,7 @@ export default function MaterialsView({
                         </div>
                       </div>
                       
-                      <h3 className="font-display font-semibold text-sm text-slate-100 line-clamp-2 min-h-[40px] group-hover:text-blue-400 transition">
+                      <h3 className="font-condensed font-bold text-base text-slate-100 line-clamp-2 min-h-[40px] group-hover:text-amber-500 transition">
                         {m.title}
                       </h3>
                       
@@ -487,7 +487,7 @@ export default function MaterialsView({
           <div className="bg-slate-950 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-900">
             <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-950">
               <div>
-                <h4 className="font-display font-semibold text-sm">MSME Sourcing Commitment</h4>
+                <h4 className="font-condensed font-bold text-base tracking-wide text-white">MSME Sourcing Commitment</h4>
                 <p className="text-[10px] text-slate-400 mt-1">Order verification & pre-approved credit setup</p>
               </div>
               <button 
@@ -606,7 +606,7 @@ export default function MaterialsView({
           <div className="bg-slate-950 border border-slate-900 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden">
             <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-950">
               <div>
-                <h4 className="font-display font-semibold text-sm flex items-center space-x-2">
+                <h4 className="font-condensed font-bold text-base tracking-wide text-white flex items-center space-x-2">
                   <Sparkles size={16} className="text-amber-500" />
                   <span>Submit Sourcing Call</span>
                 </h4>
