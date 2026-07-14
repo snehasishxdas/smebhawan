@@ -34,8 +34,20 @@ export default function HomeLanding({ onExploreMaterials }: HomeLandingProps) {
         className="relative h-[90vh] md:h-screen w-full flex items-center justify-start overflow-hidden px-6 md:px-16"
         id="hero-section"
       >
-        {/* Background Overlay - transparent to show the global fixed background */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-slate-950/25 via-transparent to-slate-950/50"></div>
+        {/* Background Video - mobile optimized with playsInline, loop, autoPlay and muted */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <video
+            src="/assets/home.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover opacity-25 scale-100 transition-opacity duration-1000"
+          />
+          {/* Subtle gradient overlay to blend into the rest of the dark page */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-transparent to-[#05070c]"></div>
+        </div>
 
         {/* Content Container (Left-aligned, high-impact) */}
         <div className="relative z-10 max-w-6xl w-full mx-auto space-y-8 md:space-y-12 py-12">
