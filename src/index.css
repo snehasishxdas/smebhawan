@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-brand-blue: #0f172a;
+  --color-brand-accent: #b45309;
+  
+  /* Overriding default Tailwind blue palette to use our rich branding terracotta theme */
+  --color-blue-50: #fdfaf7;
+  --color-blue-100: #fbeee4;
+  --color-blue-200: #f7dac4;
+  --color-blue-300: #f1bf9b;
+  --color-blue-400: #e49767;
+  --color-blue-500: #d4713c;
+  --color-blue-600: #b45309; /* Core logo terracotta */
+  --color-blue-700: #9a3412; /* Darker accent */
+  --color-blue-800: #7c2d12;
+  --color-blue-900: #451a03;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #FAF8F5; /* Matches the clean logo cream/beige canvas perfectly */
+  color: #0f172a;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}

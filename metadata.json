@@ -1,0 +1,6 @@
+{
+  "name": "smebhawan",
+  "description": "B2B MSME Raw Material Supply Chain & Tracking Platform with Stripe subscription management and SMTP automated notifications and reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
