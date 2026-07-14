@@ -61,13 +61,13 @@ export default function Header({
         </button>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex space-x-2 text-sm">
+        <nav className="hidden md:flex space-x-6 text-xs uppercase tracking-widest font-semibold">
           <button
             onClick={() => setActiveView("home")}
-            className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+            className={`py-2 transition cursor-pointer border-b-2 ${
               activeView === "home" 
-                ? "bg-slate-900 border-slate-800 text-amber-500 font-semibold shadow-glow-amber" 
-                : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
+                ? "border-amber-500 text-amber-500 font-bold" 
+                : "border-transparent text-slate-300 hover:text-white"
             }`}
           >
             Home
@@ -75,10 +75,10 @@ export default function Header({
           
           <button
             onClick={() => setActiveView("materials")}
-            className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+            className={`py-2 transition cursor-pointer border-b-2 ${
               activeView === "materials" 
-                ? "bg-slate-900 border-slate-800 text-amber-500 font-semibold shadow-glow-amber" 
-                : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
+                ? "border-amber-500 text-amber-500 font-bold" 
+                : "border-transparent text-slate-300 hover:text-white"
             }`}
           >
             All Materials
@@ -89,37 +89,37 @@ export default function Header({
               {user.role === "buyer" && (
                 <button
                   onClick={() => setActiveView("buyer")}
-                  className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+                  className={`py-2 transition cursor-pointer border-b-2 ${
                     activeView === "buyer" 
-                      ? "bg-blue-600 border-blue-500 text-white shadow-glow-blue" 
-                      : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
+                      ? "border-amber-500 text-amber-500 font-bold" 
+                      : "border-transparent text-slate-300 hover:text-white"
                   }`}
                 >
-                  My Procurement Console
+                  Procurement Console
                 </button>
               )}
               {user.role === "supplier" && (
                 <button
                   onClick={() => setActiveView("supplier")}
-                  className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+                  className={`py-2 transition cursor-pointer border-b-2 ${
                     activeView === "supplier" 
-                      ? "bg-blue-600 border-blue-500 text-white shadow-glow-blue" 
-                      : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
+                      ? "border-amber-500 text-amber-500 font-bold" 
+                      : "border-transparent text-slate-300 hover:text-white"
                   }`}
                 >
-                  Supplier Analytics & Link Hub
+                  Supplier Analytics
                 </button>
               )}
               {user.role === "admin" && (
                 <button
                   onClick={() => setActiveView("admin")}
-                  className={`px-4 py-2 rounded-xl font-medium transition cursor-pointer border ${
+                  className={`py-2 transition cursor-pointer border-b-2 ${
                     activeView === "admin" 
-                      ? "bg-rose-950 border-rose-800 text-rose-300 shadow-glow-blue" 
-                      : "border-transparent text-slate-300 hover:text-white hover:bg-slate-900/40"
+                      ? "border-rose-500 text-rose-400 font-bold" 
+                      : "border-transparent text-slate-300 hover:text-white"
                   }`}
                 >
-                  Internal Admin control Panel
+                  Admin Control Panel
                 </button>
               )}
             </>
