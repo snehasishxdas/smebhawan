@@ -19,6 +19,18 @@ export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [dbConnected, setDbConnected] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    const root = window.document.body;
+    if (theme === "dark") {
+      root.classList.remove("light");
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+      root.classList.add("light");
+    }
+  }, [theme]);
 
   // Active View Tab: home, buyer, supplier, admin
   const [activeView, setActiveView] = useState<string>("home");
@@ -540,6 +552,8 @@ export default function App() {
         activeView={activeView}
         setActiveView={setActiveView}
         onToggleNotifications={() => setShowNotificationsInbox(prev => !prev)}
+        theme={theme}
+        onToggleTheme={() => setTheme(prev => prev === "dark" ? "light" : "dark")}
       />
 
       {/* 2. Main Body with dynamic active tabs */}
@@ -573,7 +587,10 @@ export default function App() {
             ) : (
               <>
                 {activeView === "home" && (
-                  <HomeLanding onExploreMaterials={() => setActiveView("materials")} />
+                  <HomeLanding 
+                    onExploreMaterials={() => setActiveView("materials")} 
+                    theme={theme}
+                  />
                 )}
 
                 {activeView === "materials" && (
@@ -586,6 +603,7 @@ export default function App() {
                       setAuthMode(mode);
                       setAuthOpen(true);
                     }}
+                    theme={theme}
                   />
                 )}
 

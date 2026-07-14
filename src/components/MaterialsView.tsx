@@ -11,6 +11,7 @@ interface MaterialsViewProps {
   onSubmitRequest: (reqData: any) => Promise<boolean>;
   onRegisterClick: (rawLinkSlug: string, materialId: string) => void;
   onOpenAuth: (mode: "login" | "register") => void;
+  theme: "dark" | "light";
 }
 
 const CATEGORIES = [
@@ -42,6 +43,7 @@ export default function MaterialsView({
   onSubmitRequest,
   onRegisterClick,
   onOpenAuth,
+  theme,
 }: MaterialsViewProps) {
   // Search parameters
   const [searchCategory, setSearchCategory] = useState("");
@@ -149,44 +151,64 @@ export default function MaterialsView({
   };
 
   return (
-    <div className="flex flex-col space-y-8 pb-16 bg-transparent text-slate-100 min-h-screen">
+    <div className={`flex flex-col space-y-8 pb-16 bg-transparent min-h-screen transition-colors duration-300 ${
+      theme === "dark" ? "text-slate-100" : "text-slate-900"
+    }`}>
       
       {/* 1. Header Toolbar / Top Section - Dedicated Search Panel */}
-      <section className="bg-slate-950/80 backdrop-blur-md border-b border-slate-900 text-white py-12 px-6">
+      <section className={`transition-colors duration-300 border-b py-12 px-6 ${
+        theme === "dark" 
+          ? "bg-slate-950/80 backdrop-blur-md border-slate-900 text-white" 
+          : "bg-white/90 backdrop-blur-md border-slate-200 text-slate-800 shadow-xs"
+      }`}>
         <div className="max-w-7xl mx-auto space-y-6">
           <div className="text-center md:text-left space-y-2">
-            <h2 className="text-3xl font-bold font-condensed tracking-wide text-white flex items-center justify-center md:justify-start gap-2">
-              <Sparkles size={20} className="text-amber-500" />
+            <h2 className={`text-3xl font-bold font-condensed tracking-wide flex items-center justify-center md:justify-start gap-2 ${
+              theme === "dark" ? "text-white" : "text-slate-900"
+            }`}>
+              <Sparkles size={20} className={theme === "dark" ? "text-amber-500" : "text-amber-600"} />
               <span>National Materials Sourcing Directory</span>
             </h2>
-            <p className="text-xs text-slate-400 font-sans max-w-xl">
+            <p className={`text-xs font-sans max-w-xl ${
+              theme === "dark" ? "text-slate-400" : "text-slate-600"
+            }`}>
               Search through thousands of live verified industrial manufacturer listing endpoints across India.
             </p>
           </div>
 
           {/* Search Card Container with multiple dropdowns */}
-          <div className="bg-slate-900/60 backdrop-blur-md p-3.5 rounded-2xl max-w-6xl mx-auto shadow-2xl border border-slate-800 grid grid-cols-1 md:grid-cols-4 gap-2.5">
+          <div className={`p-3.5 rounded-2xl max-w-6xl mx-auto shadow-2xl grid grid-cols-1 md:grid-cols-4 gap-2.5 transition-colors duration-300 border ${
+            theme === "dark"
+              ? "bg-slate-900/60 backdrop-blur-md border-slate-850"
+              : "bg-[#f3ede6]/60 backdrop-blur-md border-slate-200"
+          }`}>
             {/* Category selection */}
-            <div className="bg-slate-950 rounded-xl px-3 py-2 flex items-center space-x-2 text-left border border-slate-800 shadow-inner">
-              <Tag size={16} className="text-blue-500 shrink-0" />
+            <div className={`rounded-xl px-3 py-2 flex items-center space-x-2 text-left border shadow-inner transition-colors ${
+              theme === "dark" ? "bg-slate-950 border-slate-800" : "bg-white border-slate-200"
+            }`}>
+              <Tag size={16} className="text-amber-600 shrink-0" />
               <div className="flex-1 min-w-0">
                 <span className="text-[9px] font-bold text-slate-500 block uppercase tracking-wider font-mono">Category</span>
                 <select 
                   value={searchCategory}
                   onChange={(e) => setSearchCategory(e.target.value)}
-                  className="w-full text-xs font-semibold focus:outline-none bg-transparent text-slate-200 border-none cursor-pointer"
+                  className={`w-full text-xs font-semibold focus:outline-none bg-transparent border-none cursor-pointer ${
+                    theme === "dark" ? "text-slate-200" : "text-slate-800"
+                  }`}
                 >
-                  <option value="" className="bg-slate-950 text-slate-200">All Categories</option>
+                  <option value="" className={theme === "dark" ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"}>All Categories</option>
                   {CATEGORIES.map(cat => (
-                    <option key={cat} value={cat} className="bg-slate-950 text-slate-200">{cat}</option>
+                    <option key={cat} value={cat} className={theme === "dark" ? "bg-slate-950 text-slate-200" : "bg-white text-slate-800"}>{cat}</option>
                   ))}
                 </select>
               </div>
             </div>
 
-            {/* Material Name input */}
-            <div className="bg-slate-950 rounded-xl px-3 py-2 flex items-center space-x-2 text-left border border-slate-800 shadow-inner">
-              <Search size={16} className="text-blue-500 shrink-0" />
+            {/* Raw Material input */}
+            <div className={`rounded-xl px-3 py-2 flex items-center space-x-2 text-left border shadow-inner transition-colors ${
+              theme === "dark" ? "bg-slate-950 border-slate-800" : "bg-white border-slate-200"
+            }`}>
+              <Search size={16} className="text-amber-600 shrink-0" />
               <div className="flex-1 min-w-0">
                 <span className="text-[9px] font-bold text-slate-500 block uppercase tracking-wider font-mono">Raw Material</span>
                 <input 
@@ -194,14 +216,18 @@ export default function MaterialsView({
                   placeholder="Steel, plastics, etc."
                   value={searchMaterial}
                   onChange={(e) => setSearchMaterial(e.target.value)}
-                  className="w-full text-xs font-medium focus:outline-none bg-transparent text-slate-200 placeholder-slate-600 border-none"
+                  className={`w-full text-xs font-medium focus:outline-none bg-transparent border-none ${
+                    theme === "dark" ? "text-slate-200 placeholder-slate-600" : "text-slate-800 placeholder-slate-400"
+                  }`}
                 />
               </div>
             </div>
 
             {/* Location selector */}
-            <div className="bg-slate-950 rounded-xl px-3 py-2 flex items-center space-x-2 text-left border border-slate-800 shadow-inner">
-              <MapPin size={16} className="text-blue-500 shrink-0" />
+            <div className={`rounded-xl px-3 py-2 flex items-center space-x-2 text-left border shadow-inner transition-colors ${
+              theme === "dark" ? "bg-slate-950 border-slate-800" : "bg-white border-slate-200"
+            }`}>
+              <MapPin size={16} className="text-amber-600 shrink-0" />
               <div className="flex-1 min-w-0">
                 <span className="text-[9px] font-bold text-slate-500 block uppercase tracking-wider font-mono">Location</span>
                 <input 
@@ -209,7 +235,9 @@ export default function MaterialsView({
                   placeholder="Mumbai, Gujarat..."
                   value={searchLocation}
                   onChange={(e) => setSearchLocation(e.target.value)}
-                  className="w-full text-xs font-medium focus:outline-none bg-transparent text-slate-200 placeholder-slate-600 border-none"
+                  className={`w-full text-xs font-medium focus:outline-none bg-transparent border-none ${
+                    theme === "dark" ? "text-slate-200 placeholder-slate-600" : "text-slate-800 placeholder-slate-400"
+                  }`}
                 />
               </div>
             </div>
@@ -222,7 +250,11 @@ export default function MaterialsView({
                   setSearchMaterial("");
                   setSearchLocation("");
                 }}
-                className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl py-3.5 text-xs font-bold transition flex items-center justify-center space-x-1 cursor-pointer border border-slate-700"
+                className={`flex-1 rounded-xl py-3.5 text-xs font-bold transition flex items-center justify-center space-x-1 cursor-pointer border ${
+                  theme === "dark"
+                    ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700"
+                    : "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
+                }`}
               >
                 Clear
               </button>
@@ -230,7 +262,11 @@ export default function MaterialsView({
                 onClick={() => {
                   setActiveSidebarCat("");
                 }}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3.5 text-xs font-bold tracking-wide shadow-lg hover:shadow-glow-blue transition flex items-center justify-center space-x-1 cursor-pointer border border-blue-500/50"
+                className={`flex-1 rounded-xl py-3.5 text-xs font-bold tracking-wide transition flex items-center justify-center space-x-1 cursor-pointer border ${
+                  theme === "dark"
+                    ? "bg-blue-600 hover:bg-blue-700 text-white border-blue-500/50 shadow-lg hover:shadow-glow-blue"
+                    : "bg-blue-600 hover:bg-blue-700 text-white border-blue-600 shadow-md"
+                }`}
               >
                 <span>Search</span>
                 <ArrowRight size={14} />
@@ -241,7 +277,11 @@ export default function MaterialsView({
       </section>
 
       {/* 2. Top Banner Row: Categories Navigation */}
-      <section className="bg-slate-950/40 border-y border-slate-900 text-white py-2 px-4 scroll-smooth">
+      <section className={`border-y py-2 px-4 scroll-smooth transition-colors duration-300 ${
+        theme === "dark" 
+          ? "bg-slate-950/40 border-slate-900 text-white" 
+          : "bg-white/40 border-slate-200 text-slate-800 shadow-xs"
+      }`}>
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center text-xs font-semibold gap-y-2">
           {CATEGORIES.map(cat => (
             <button
@@ -252,7 +292,7 @@ export default function MaterialsView({
               }}
               className={`hover:text-amber-500 transition px-2.5 py-1.5 rounded-lg cursor-pointer whitespace-nowrap text-[11px] ${
                 activeSidebarCat.toLowerCase() === cat.toLowerCase()
-                  ? "bg-slate-900 border border-slate-800 text-amber-500 font-bold"
+                  ? (theme === "dark" ? "bg-slate-900 border border-slate-800 text-amber-500 font-bold" : "bg-amber-50 border border-amber-200 text-amber-700 font-bold")
                   : "text-slate-400"
               }`}
             >
@@ -276,11 +316,13 @@ export default function MaterialsView({
         
         {/* Left Side: "Browse By Categories" Sidebar */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-slate-950/80 rounded-3xl border border-slate-900 shadow-2xl overflow-hidden">
-            <div className="bg-slate-900 border-b border-slate-950 p-4">
-              <h3 className="font-condensed font-bold text-sm tracking-wider text-slate-300">Browse By Categories</h3>
+          <div className={`rounded-3xl border shadow-2xl overflow-hidden transition-colors duration-300 ${
+            theme === "dark" ? "bg-slate-950/80 border-slate-900" : "bg-white border-slate-200/80"
+          }`}>
+            <div className={`p-4 border-b ${theme === "dark" ? "bg-slate-900 border-slate-950" : "bg-slate-50 border-slate-100"}`}>
+              <h3 className={`font-condensed font-bold text-sm tracking-wider ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Browse By Categories</h3>
             </div>
-            <nav className="flex flex-col divide-y divide-slate-900/60 font-sans">
+            <nav className={`flex flex-col divide-y font-sans ${theme === "dark" ? "divide-slate-900/60" : "divide-slate-100"}`}>
               {SIDEBAR_CATEGORIES.map(cat => {
                 const isActive = activeSidebarCat.toLowerCase() === cat.toLowerCase();
                 return (
@@ -292,12 +334,16 @@ export default function MaterialsView({
                     }}
                     className={`p-3.5 text-left text-xs font-medium transition flex justify-between items-center cursor-pointer ${
                       isActive 
-                        ? "bg-slate-900/80 text-amber-500 font-bold border-l-4 border-l-amber-500 pl-4.5" 
-                        : "text-slate-400 hover:bg-slate-900/40 hover:text-slate-200"
+                        ? (theme === "dark" 
+                            ? "bg-slate-900/80 text-amber-500 font-bold border-l-4 border-l-amber-500 pl-4.5" 
+                            : "bg-amber-50 text-amber-700 font-bold border-l-4 border-l-amber-600 pl-4.5")
+                        : (theme === "dark" 
+                            ? "text-slate-400 hover:bg-slate-900/40 hover:text-slate-200" 
+                            : "text-slate-650 hover:bg-slate-50 hover:text-slate-900")
                     }`}
                   >
                     <span>{cat}</span>
-                    <ChevronRight size={14} className={isActive ? "text-amber-500" : "text-slate-600"} />
+                    <ChevronRight size={14} className={isActive ? (theme === "dark" ? "text-amber-500" : "text-amber-600") : "text-slate-400"} />
                   </button>
                 );
               })}
@@ -305,13 +351,15 @@ export default function MaterialsView({
           </div>
 
           {/* Quick Quote Widget */}
-          <div className="bg-slate-950/80 border border-slate-900 rounded-3xl p-5 shadow-2xl space-y-4">
-            <div className="flex items-center space-x-2 text-blue-400">
+          <div className={`border rounded-3xl p-5 shadow-2xl space-y-4 transition-colors duration-300 ${
+            theme === "dark" ? "bg-slate-950/80 border-slate-900" : "bg-white border-slate-200"
+          }`}>
+            <div className="flex items-center space-x-2 text-amber-600">
               <ClipboardCheck size={18} />
               <span className="text-xs font-mono font-bold uppercase tracking-wider">Demand Registry</span>
             </div>
-            <h4 className="font-condensed font-bold text-base text-white tracking-wide">Sourcing Custom Materials?</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
+            <h4 className={`font-condensed font-bold text-base tracking-wide ${theme === "dark" ? "text-white" : "text-slate-900"}`}>Sourcing Custom Materials?</h4>
+            <p className={`text-[11px] leading-relaxed ${theme === "dark" ? "text-slate-400" : "text-slate-600"}`}>
               If an item is not found in our live active supplier directory, submit a general procurement challenge to trigger automatic broker matching processes.
             </p>
             <button
@@ -332,15 +380,23 @@ export default function MaterialsView({
 
         {/* Right Side: Active Catalog & Product Listings */}
         <div className="lg:col-span-9 space-y-6">
-          <div className="flex flex-wrap justify-between items-center border-b border-slate-900 pb-4 gap-y-2">
+          <div className={`flex flex-wrap justify-between items-center border-b pb-4 gap-y-2 ${
+            theme === "dark" ? "border-slate-900" : "border-slate-200"
+          }`}>
             <div>
-              <h2 className="text-2xl font-condensed font-bold text-white tracking-wide flex items-center space-x-2">
+              <h2 className={`text-2xl font-condensed font-bold tracking-wide flex items-center space-x-2 ${
+                theme === "dark" ? "text-white" : "text-slate-900"
+              }`}>
                 <span>Active Sourcing Directory</span>
-                <span className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 font-mono font-normal px-2 py-0.5 rounded-full">
+                <span className={`text-[10px] border font-mono font-normal px-2 py-0.5 rounded-full ${
+                  theme === "dark" 
+                    ? "bg-slate-900 border-slate-800 text-slate-400" 
+                    : "bg-slate-100 border-slate-200 text-slate-600"
+                }`}>
                   {filteredMaterials.length} Active Items
                 </span>
               </h2>
-              <p className="text-[11px] text-slate-500 mt-1">
+              <p className={`text-[11px] mt-1 ${theme === "dark" ? "text-slate-500" : "text-slate-500"}`}>
                 {activeSidebarCat ? `Filtering listings classified under ${activeSidebarCat}` : "Showing all verified manufacturer materials"}
               </p>
             </div>
@@ -348,7 +404,11 @@ export default function MaterialsView({
             {activeSidebarCat && (
               <button
                 onClick={() => setActiveSidebarCat("")}
-                className="text-xs text-blue-400 hover:underline font-semibold bg-slate-950 border border-slate-900 px-3 py-1.5 rounded-xl cursor-pointer"
+                className={`text-xs font-semibold px-3 py-1.5 rounded-xl cursor-pointer border ${
+                  theme === "dark" 
+                    ? "text-blue-400 bg-slate-950 border-slate-900 hover:underline" 
+                    : "text-blue-650 bg-white border-slate-205 hover:bg-slate-50 shadow-sm"
+                }`}
               >
                 Clear category filter
               </button>
@@ -357,12 +417,14 @@ export default function MaterialsView({
 
           {/* Fallback Empty */}
           {filteredMaterials.length === 0 ? (
-            <div className="p-12 text-center bg-slate-950 border border-slate-900 rounded-3xl flex flex-col items-center space-y-4 shadow-xl">
-              <div className="w-12 h-12 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">
+            <div className={`p-12 text-center border rounded-3xl flex flex-col items-center space-y-4 shadow-xl transition-colors ${
+              theme === "dark" ? "bg-slate-950 border-slate-900" : "bg-white border-slate-200"
+            }`}>
+              <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400">
                 <Search size={22} />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-200">No raw material listings matched</h3>
+                <h3 className={`font-semibold ${theme === "dark" ? "text-slate-200" : "text-slate-800"}`}>No raw material listings matched</h3>
                 <p className="text-xs text-slate-500 mt-1">
                   Try clearing your search query or choosing another category in the sidebar directory.
                 </p>
@@ -373,7 +435,11 @@ export default function MaterialsView({
               {filteredMaterials.map(m => (
                 <div 
                   key={m._id}
-                  className="bg-slate-950 rounded-3xl border border-slate-900 shadow-xl hover:shadow-glow-blue hover:border-blue-500/20 transition-all duration-300 overflow-hidden flex flex-col group justify-between"
+                  className={`rounded-3xl border transition-all duration-300 overflow-hidden flex flex-col group justify-between shadow-md ${
+                    theme === "dark"
+                      ? "bg-slate-950 border-slate-900 hover:shadow-glow-blue hover:border-blue-500/20 text-white"
+                      : "bg-white border-slate-200/80 hover:shadow-lg hover:border-blue-500/35 text-slate-800"
+                  }`}
                 >
                   {/* Product Header Thumbnail */}
                   <div className="relative h-44 w-full bg-slate-900 overflow-hidden">
@@ -413,46 +479,60 @@ export default function MaterialsView({
                         </div>
                       </div>
                       
-                      <h3 className="font-condensed font-bold text-base text-slate-100 line-clamp-2 min-h-[40px] group-hover:text-amber-500 transition">
+                      <h3 className={`font-condensed font-bold text-base line-clamp-2 min-h-[40px] transition ${
+                        theme === "dark" ? "text-slate-100 group-hover:text-amber-500" : "text-slate-900 group-hover:text-amber-600"
+                      }`}>
                         {m.title}
                       </h3>
                       
-                      <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+                      <p className={`text-[11px] line-clamp-2 leading-relaxed ${
+                        theme === "dark" ? "text-slate-400" : "text-slate-600"
+                      }`}>
                         {m.description}
                       </p>
                     </div>
 
                     <div className="space-y-2">
                       {/* Price Tag */}
-                      <div className="flex justify-between items-end border-t border-slate-900 pt-3">
+                      <div className={`flex justify-between items-end border-t pt-3 ${
+                        theme === "dark" ? "border-slate-900" : "border-slate-100"
+                      }`}>
                         <div>
                           <span className="text-[9px] text-slate-500 block font-medium uppercase font-mono">Indicative Rate B2B</span>
-                          <span className="text-sm font-semibold text-white">₹{m.priceQuote.toLocaleString("en-IN")}</span>
+                          <span className={`text-sm font-semibold ${theme === "dark" ? "text-white" : "text-slate-950"}`}>₹{m.priceQuote.toLocaleString("en-IN")}</span>
                           <span className="text-[11px] text-slate-500 font-mono font-medium"> / {m.unit}</span>
                         </div>
                         <div className="text-right">
                           <span className="text-[9px] text-slate-500 block font-medium uppercase font-mono">Supplier</span>
-                          <span className="text-xs font-semibold text-slate-300 truncate max-w-[130px] inline-block">{m.supplier}</span>
+                          <span className={`text-xs font-semibold truncate max-w-[130px] inline-block ${
+                            theme === "dark" ? "text-slate-300" : "text-slate-700"
+                          }`}>{m.supplier}</span>
                         </div>
                       </div>
 
                       {/* Location Badge */}
                       <div className="flex items-center space-x-1 text-slate-400 text-[11px]">
                         <MapPin size={12} className="text-slate-500 shrink-0" />
-                        <span className="truncate">{m.location}</span>
+                        <span className={theme === "dark" ? "text-slate-450" : "text-slate-650"}>{m.location}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Dynamic Interactive Link Footer */}
-                  <div className="p-4 bg-slate-900/30 border-t border-slate-900 flex gap-2">
+                  <div className={`p-4 border-t flex gap-2 ${
+                    theme === "dark" ? "bg-slate-900/30 border-slate-900" : "bg-slate-50 border-slate-200/60"
+                  }`}>
                     {/* "Sourcing Dynamic link" - REGISTER metric on click! */}
                     <a
                       href={`#lead_details_${m._id}`}
                       onClick={() => {
                         onRegisterClick(m.rawLink, m._id);
                       }}
-                      className="flex-1 bg-slate-900 hover:bg-slate-800/85 relative border border-slate-800 hover:border-slate-700 text-slate-200 rounded-xl py-2 text-xs font-semibold transition text-center flex items-center justify-center space-x-1 focus:ring cursor-pointer"
+                      className={`flex-1 relative rounded-xl py-2 text-xs font-semibold transition text-center flex items-center justify-center space-x-1 focus:ring cursor-pointer border ${
+                        theme === "dark"
+                          ? "bg-slate-900 hover:bg-slate-800/85 border-slate-800 hover:border-slate-700 text-slate-200"
+                          : "bg-white hover:bg-slate-100/80 border-slate-200 hover:border-slate-300 text-slate-700"
+                      }`}
                       title="Follow supplier external product website"
                     >
                       <Activity size={12} className="text-emerald-500 animate-pulse" />
@@ -469,7 +549,7 @@ export default function MaterialsView({
                           setInquiryMaterial(m);
                         }
                       }}
-                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-3 py-2 text-xs font-bold shadow-xs hover:shadow-glow-blue border border-blue-500/20 transition cursor-pointer"
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-3 py-2 text-xs font-bold border border-blue-500/20 transition cursor-pointer"
                     >
                       Order
                     </button>
@@ -484,15 +564,19 @@ export default function MaterialsView({
       {/* 4. Active Sourcing Inquiry Modal */}
       {inquiryMaterial && (
         <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-slate-950 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-900">
-            <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-950">
+          <div className={`rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border transition-colors duration-300 ${
+            theme === "dark" ? "bg-slate-950 border-slate-900 text-white" : "bg-white border-slate-200 text-slate-800"
+          }`}>
+            <div className={`p-5 flex justify-between items-center border-b ${
+              theme === "dark" ? "bg-slate-900 text-white border-b-slate-950" : "bg-slate-50 text-slate-900 border-b-slate-200"
+            }`}>
               <div>
-                <h4 className="font-condensed font-bold text-base tracking-wide text-white">MSME Sourcing Commitment</h4>
+                <h4 className="font-condensed font-bold text-base tracking-wide">MSME Sourcing Commitment</h4>
                 <p className="text-[10px] text-slate-400 mt-1">Order verification & pre-approved credit setup</p>
               </div>
               <button 
                 onClick={() => setInquiryMaterial(null)}
-                className="text-slate-400 hover:text-white cursor-pointer"
+                className="text-slate-400 hover:text-red-500 cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -508,48 +592,54 @@ export default function MaterialsView({
                 </div>
               ) : (
                 <>
-                  <div className="p-3.5 bg-slate-900 rounded-xl space-y-1 border border-slate-800">
+                  <div className={`p-3.5 rounded-xl space-y-1 border ${
+                    theme === "dark" ? "bg-slate-900 border-slate-800" : "bg-slate-50 border-slate-200"
+                  }`}>
                     <span className="text-[8px] font-bold text-slate-500 block uppercase font-mono">Product Spec</span>
-                    <strong className="text-xs text-white block line-clamp-1">{inquiryMaterial.title}</strong>
-                    <p className="text-[11px] text-slate-400">Unit base price: ₹{inquiryMaterial.priceQuote.toLocaleString()}/{inquiryMaterial.unit}</p>
+                    <strong className={`text-xs block line-clamp-1 ${theme === "dark" ? "text-white" : "text-slate-900"}`}>{inquiryMaterial.title}</strong>
+                    <p className="text-[11px] text-slate-400 font-sans">Unit base price: ₹{inquiryMaterial.priceQuote.toLocaleString()}/{inquiryMaterial.unit}</p>
                   </div>
 
                   {/* Quantity */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 block">Required B2B Volume ({inquiryMaterial.unit})</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Required B2B Volume ({inquiryMaterial.unit})</label>
                     <input 
                       type="number"
                       value={inquiryQty}
                       onChange={(e) => setInquiryQty(Math.max(1, Number(e.target.value)))}
-                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+                      className={`w-full p-2.5 rounded-xl text-xs focus:outline-none focus:border-blue-500 border ${
+                        theme === "dark" ? "bg-slate-900 border-slate-800 text-slate-205" : "bg-slate-50 border-slate-200 text-slate-900"
+                      }`}
                       required
                     />
                   </div>
 
                   {/* Shipping address */}
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 block">Delivery Sourcing Destination</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Delivery Sourcing Destination</label>
                     <input 
                       type="text"
                       placeholder="E.g. JNP Navy Port, Maharashtra"
                       value={inquiryLocation}
                       onChange={(e) => setInquiryLocation(e.target.value)}
-                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+                      className={`w-full p-2.5 rounded-xl text-xs focus:outline-none focus:border-blue-500 border ${
+                        theme === "dark" ? "bg-slate-900 border-slate-800 text-slate-205" : "bg-slate-50 border-slate-200 text-slate-900"
+                      }`}
                       required
                     />
                   </div>
 
                   {/* Path Selection: Direct (A) vs Credit (B) */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-slate-300 block">Sourcing Settle Path</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Sourcing Settle Path</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setPaymentPath("PathA_Direct")}
                         className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathA_Direct"
-                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
-                            : "border-slate-850 text-slate-400 hover:border-slate-700"
+                            ? (theme === "dark" ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold" : "border-blue-600 bg-blue-50 text-blue-700 font-semibold")
+                            : (theme === "dark" ? "border-slate-850 text-slate-500" : "border-slate-200 text-slate-500")
                         }`}
                       >
                         <span>Path A: Direct</span>
@@ -561,8 +651,8 @@ export default function MaterialsView({
                         onClick={() => setPaymentPath("PathB_Credit")}
                         className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathB_Credit"
-                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
-                            : "border-slate-850 text-slate-400 hover:border-slate-700"
+                            ? (theme === "dark" ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold" : "border-blue-600 bg-blue-50 text-blue-700 font-semibold")
+                            : (theme === "dark" ? "border-slate-850 text-slate-500" : "border-slate-200 text-slate-500")
                         }`}
                       >
                         <span>Path B: Credit</span>
@@ -572,13 +662,15 @@ export default function MaterialsView({
                   </div>
 
                   {/* Calculations summary */}
-                  <div className="p-3.5 bg-slate-900/60 rounded-xl text-xs space-y-1.5 border border-slate-850">
+                  <div className={`p-3.5 rounded-xl text-xs space-y-1.5 border ${
+                    theme === "dark" ? "bg-slate-900/60 border-slate-850" : "bg-slate-50 border-slate-200"
+                  }`}>
                     <div className="flex justify-between">
                       <span className="text-slate-400">Estimated Invoice:</span>
-                      <strong className="text-white">₹{(inquiryQty * inquiryMaterial.priceQuote).toLocaleString('en-IN')} INR</strong>
+                      <strong className={theme === "dark" ? "text-white" : "text-slate-900"}>₹{(inquiryQty * inquiryMaterial.priceQuote).toLocaleString('en-IN')} INR</strong>
                     </div>
                     {paymentPath === "PathB_Credit" && (
-                      <div className="flex justify-between text-blue-400">
+                      <div className="flex justify-between text-blue-500">
                         <span>Path B Interest Cap (30 days):</span>
                         <strong>₹{Math.round((inquiryQty * inquiryMaterial.priceQuote) * 0.16 * 30 / 365).toLocaleString('en-IN')} INR</strong>
                       </div>
@@ -603,18 +695,22 @@ export default function MaterialsView({
       {/* 5. Custom Raw Material Sourcing Modal Form */}
       {showCustomForm && (
         <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-slate-950 border border-slate-900 rounded-3xl shadow-2xl max-w-md w-full overflow-hidden">
-            <div className="bg-slate-900 text-white p-5 flex justify-between items-center border-b border-slate-950">
+          <div className={`border rounded-3xl shadow-2xl max-w-md w-full overflow-hidden transition-colors duration-300 ${
+            theme === "dark" ? "bg-slate-950 border-slate-900 text-white" : "bg-white border-slate-200 text-slate-800"
+          }`}>
+            <div className={`p-5 flex justify-between items-center border-b ${
+              theme === "dark" ? "bg-slate-900 text-white border-b-slate-950" : "bg-slate-50 text-slate-900 border-b-slate-200"
+            }`}>
               <div>
-                <h4 className="font-condensed font-bold text-base tracking-wide text-white flex items-center space-x-2">
-                  <Sparkles size={16} className="text-amber-500" />
+                <h4 className="font-condensed font-bold text-base tracking-wide flex items-center space-x-2">
+                  <Sparkles size={16} className={theme === "dark" ? "text-amber-500" : "text-amber-600"} />
                   <span>Submit Sourcing Call</span>
                 </h4>
                 <p className="text-[10px] text-slate-400 mt-1">Multi-Supplier B2B Sourcing Demands</p>
               </div>
               <button 
                 onClick={() => setShowCustomForm(false)}
-                className="text-slate-400 hover:text-white cursor-pointer"
+                className="text-slate-400 hover:text-red-500 cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -630,53 +726,59 @@ export default function MaterialsView({
               ) : (
                 <>
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 block">Required Product Specification / Name</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Required Product Specification / Name</label>
                     <input 
                       type="text"
                       placeholder="E.g. Cold Rolled Industrial Steel sheets (CRCA)"
                       value={customMaterial}
                       onChange={(e) => setCustomMaterial(e.target.value)}
-                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+                      className={`w-full p-2.5 rounded-xl text-xs focus:outline-none focus:border-blue-500 border ${
+                        theme === "dark" ? "bg-slate-900 border-slate-800 text-slate-205" : "bg-slate-50 border-slate-200 text-slate-900"
+                      }`}
                       required
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-slate-300 block">Quantity Needed</label>
+                      <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Quantity Needed</label>
                       <input 
                         type="number"
                         value={customQty}
                         onChange={(e) => setCustomQty(Math.max(1, Number(e.target.value)))}
-                        className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-blue-500"
+                        className={`w-full p-2.5 rounded-xl text-xs focus:outline-none focus:border-blue-500 border ${
+                          theme === "dark" ? "bg-slate-900 border-slate-800 text-slate-205" : "bg-slate-50 border-slate-200 text-slate-900"
+                        }`}
                         required
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-slate-300 block">Unit</label>
+                      <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Unit</label>
                       <select 
                         value={customUnit}
                         onChange={(e) => setCustomUnit(e.target.value)}
-                        className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none"
+                        className={`w-full p-2.5 rounded-xl text-xs focus:outline-none border ${
+                          theme === "dark" ? "bg-slate-900 border-slate-800 text-slate-205" : "bg-slate-50 border-slate-200 text-slate-900"
+                        }`}
                       >
-                        <option value="Tons" className="bg-slate-950">Tons</option>
-                        <option value="Kg" className="bg-slate-950">Kg</option>
-                        <option value="Cubic Metres" className="bg-slate-950">Cubic Metres</option>
-                        <option value="Litres" className="bg-slate-950">Litres</option>
+                        <option value="Tons" className={theme === "dark" ? "bg-slate-950" : "bg-white"}>Tons</option>
+                        <option value="Kg" className={theme === "dark" ? "bg-slate-950" : "bg-white"}>Kg</option>
+                        <option value="Cubic Metres" className={theme === "dark" ? "bg-slate-950" : "bg-white"}>Cubic Metres</option>
+                        <option value="Litres" className={theme === "dark" ? "bg-slate-950" : "bg-white"}>Litres</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 block">Target Settle Strategy</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Target Settle Strategy</label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setPaymentPath("PathA_Direct")}
                         className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathA_Direct"
-                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
-                            : "border-slate-850 text-slate-400 hover:border-slate-700"
+                            ? (theme === "dark" ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold" : "border-blue-600 bg-blue-50 text-blue-700 font-semibold")
+                            : (theme === "dark" ? "border-slate-850 text-slate-500" : "border-slate-200 text-slate-500")
                         }`}
                       >
                         <span>Path A: Direct</span>
@@ -688,8 +790,8 @@ export default function MaterialsView({
                         onClick={() => setPaymentPath("PathB_Credit")}
                         className={`p-2.5 rounded-xl border text-xs text-left flex flex-col justify-between transition cursor-pointer ${
                           paymentPath === "PathB_Credit"
-                            ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold shadow-glow-blue"
-                            : "border-slate-850 text-slate-400 hover:border-slate-700"
+                            ? (theme === "dark" ? "border-blue-500 bg-blue-500/10 text-blue-400 font-semibold" : "border-blue-600 bg-blue-50 text-blue-700 font-semibold")
+                            : (theme === "dark" ? "border-slate-850 text-slate-500" : "border-slate-200 text-slate-500")
                         }`}
                       >
                         <span>Path B: Credit</span>
@@ -699,18 +801,20 @@ export default function MaterialsView({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 block">Required Sourcing Budget Range</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Required Sourcing Budget Range</label>
                     <input 
                       type="text"
                       value={customBudget}
                       onChange={(e) => setCustomBudget(e.target.value)}
                       placeholder="E.g. ₹10,00,000 - ₹20,00,000"
-                      className="w-full p-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none"
+                      className={`w-full p-2.5 rounded-xl text-xs focus:outline-none border ${
+                        theme === "dark" ? "bg-slate-900 border-slate-800 text-slate-205" : "bg-slate-50 border-slate-200 text-slate-900"
+                      }`}
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-300 block">Shipment Location Target</label>
+                    <label className={`text-xs font-semibold block ${theme === "dark" ? "text-slate-300" : "text-slate-700"}`}>Shipment Location Target</label>
                     <input 
                       type="text"
                       value={customLocation}
