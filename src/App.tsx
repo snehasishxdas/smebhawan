@@ -19,7 +19,7 @@ export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [dbConnected, setDbConnected] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
 
   useEffect(() => {
     const root = window.document.body;
