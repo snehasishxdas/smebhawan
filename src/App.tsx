@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { User, RawMaterial, LinkClick, ProcurementRequest, AppNotification, AuditLog } from "./types";
-import { motion, AnimatePresence } from "motion/react";
-import SmebhawanLogo from "./components/SmebhawanLogo";
 import Header from "./components/Header";
 import HomeLanding from "./components/HomeLanding";
 import MaterialsView from "./components/MaterialsView";
@@ -50,28 +48,6 @@ export default function App() {
   // Sign In modal parameters
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
-
-  // Automated Hero intro splash state & network connection loading indicator
-  const [showSplash, setShowSplash] = useState(true);
-  const [splashProgress, setSplashProgress] = useState(0);
-
-  useEffect(() => {
-    if (showSplash) {
-      const interval = setInterval(() => {
-        setSplashProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-              setShowSplash(false);
-            }, 300);
-            return 100;
-          }
-          return prev + 5; // Increments to 100% in 2 seconds
-        });
-      }, 90);
-      return () => clearInterval(interval);
-    }
-  }, [showSplash]);
 
   // Fetch all states from express server endpoints
   const fetchAllData = async () => {
@@ -125,8 +101,8 @@ export default function App() {
 
   // Security session validation and enforcement
   useEffect(() => {
-    // Skip checking during initial loading phase or when splash is showing
-    if (loading || showSplash) return;
+    // Skip checking during initial loading phase
+    if (loading) return;
 
     if (user) {
       const allowed = 
@@ -147,7 +123,7 @@ export default function App() {
         handleLogout();
       }
     }
-  }, [activeView, user, loading, showSplash]);
+  }, [activeView, user, loading]);
 
   // Initialize and establish Real-Time SSE Listeners
   useEffect(() => {
@@ -481,64 +457,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent flex flex-col justify-between text-slate-100" id="rawlink_application_container">
-      
-      {/* Automatic Animated Intro Splash Hero Section */}
-      <AnimatePresence>
-        {showSplash && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -40, transition: { duration: 0.5, ease: "easeInOut" } }}
-            className="fixed inset-0 bg-[#0b0f19] z-[9999] flex flex-col items-center justify-center p-6"
-            id="smebhawan_splash_screen"
-          >
-            <div className="max-w-md w-full flex flex-col items-center space-y-8 text-center bg-slate-950/60 p-10 rounded-3xl border border-slate-900 shadow-2xl backdrop-blur-xl">
-              {/* Logo Animated Reveal */}
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-              >
-                <SmebhawanLogo variant="full" size="xl" lightText={true} />
-              </motion.div>
-
-              {/* Tagline / Subtitle */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="space-y-2"
-              >
-                <p className="text-xs uppercase font-bold text-amber-500 tracking-widest font-mono text-glow-amber">
-                  National MSME Infrastructure Portal
-                </p>
-                <p className="text-[13px] text-slate-400 font-sans max-w-xs mx-auto leading-relaxed">
-                  Connecting small and medium enterprises directly to raw materials and suppliers.
-                </p>
-              </motion.div>
-
-              {/* Progress Line & Realtime value */}
-              <motion.div 
-                initial={{ opacity: 0, width: "60%" }}
-                animate={{ opacity: 1, width: "100%" }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="w-full space-y-3 pt-4 max-w-xs"
-              >
-                <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-blue-600 transition-all duration-100 ease-out rounded-full shadow-glow-blue"
-                    style={{ width: `${splashProgress}%` }}
-                  />
-                </div>
-                <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
-                  <span className="animate-pulse">BUILDING B2B PIPELINES...</span>
-                  <span>{splashProgress}%</span>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* 1. Header Toolbar */}
       <Header 
         user={user}
